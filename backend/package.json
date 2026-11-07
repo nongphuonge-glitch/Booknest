@@ -1,0 +1,16 @@
+{
+  "name": "booknest-backend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "check": "tsc --noEmit",
+    "db:migrate:local": "wrangler d1 migrations apply booknest --local",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261107.1",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.158.0"
+  }
+}

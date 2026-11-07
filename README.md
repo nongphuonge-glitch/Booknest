@@ -19,5 +19,7 @@ Bố cục cấp cao theo dự án `nguon-goc-so`: tách backend, frontend và t
 
 - [Mô hình dữ liệu tài khoản](docs/account-data-model.md) (T01 / BOOK-29).
 - [Migration users và sessions](backend/db/migrations/0001_accounts.sql).
+- [Backend Worker và hướng dẫn chạy local](backend/README.md).
+- [API đăng ký khách hàng](docs/api/auth/register.md) (US01 / T03, đang triển khai).
 
 Quy trình nhánh: `main` → `develop` → `feature/<ten-cong-viec>`. Tính năng được làm trên feature rồi gộp vào `develop` sau khi kiểm tra.
