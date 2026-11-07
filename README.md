@@ -20,7 +20,9 @@ Bố cục cấp cao theo dự án `nguon-goc-so`: tách backend, frontend và t
 - [Mô hình dữ liệu tài khoản](docs/account-data-model.md) (T01 / BOOK-29).
 - [Migration users và sessions](backend/db/migrations/0001_accounts.sql).
 - [Backend Worker và hướng dẫn chạy local](backend/README.md).
-- [API đăng ký khách hàng](docs/api/auth/register.md) (US01 / T03, đang triển khai).
+- [API đăng ký khách hàng](docs/api/auth/register.md) (US01 / T03).
 - [API phiên và phân quyền](docs/api/auth/session.md) (US02 / T04).
+- [Giao diện tài khoản và hướng dẫn chạy](frontend/README.md) (BOOK-28 / BOOK-30).
+- [Tiến độ Epic tài khoản](docs/epic-account.md).
 
 Quy trình nhánh: `main` → `develop` → `feature/<ten-cong-viec>`. Tính năng được làm trên feature rồi gộp vào `develop` sau khi kiểm tra.
