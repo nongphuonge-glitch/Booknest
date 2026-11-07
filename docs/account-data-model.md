@@ -1,6 +1,6 @@
 # Mô hình dữ liệu tài khoản (T01 / BOOK-29)
 
-Schema local nằm ở [`db/migrations/0001_accounts.sql`](../db/migrations/0001_accounts.sql), dùng cú pháp SQLite tương thích Cloudflare D1.
+Schema local nằm ở [`backend/db/migrations/0001_accounts.sql`](../backend/db/migrations/0001_accounts.sql), dùng cú pháp SQLite tương thích Cloudflare D1.
 
 ```mermaid
 erDiagram
@@ -32,4 +32,4 @@ erDiagram
 - ID của cả hai bảng do API tạo, ví dụ UUID. Thời gian lưu dạng UTC ISO 8601. Bật `PRAGMA foreign_keys = ON` cho kết nối SQLite local.
 - Bảng đơn hàng của nhóm sẽ tham chiếu `users.id` để giới hạn khách chỉ đọc đơn của mình. Chưa định nghĩa bảng đơn trong migration tài khoản để tránh chồng lấn phần việc của thành viên khác.
 
-Chạy local: `sqlite3 booknest.db ".read db/migrations/0001_accounts.sql"`.
+Chạy từ thư mục gốc: `sqlite3 booknest.db ".read backend/db/migrations/0001_accounts.sql"`.
