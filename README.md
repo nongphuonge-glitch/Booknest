@@ -34,6 +34,29 @@ Bố cục cấp cao theo dự án `nguon-goc-so`: tách backend, frontend và t
 - [Hợp đồng API Quản trị Sách & Tồn kho](docs/api/books/admin.md).
 - [Hợp đồng API Đặt hàng COD](docs/api/orders/checkout.md).
 - [Hợp đồng API Quản trị & Lịch sử Đơn hàng](docs/api/orders/admin.md).
+- [Báo cáo Mini Project hoàn chỉnh (7 phần)](docs/bao-cao-mini-project.md) (US11 / T24, T26).
+- [Hướng dẫn triển khai Cloudflare Workers & D1](docs/huong-dan-deploy-cloudflare.md) (US10 / T20, T21).
+- [Kịch bản Demo & Khung Slide 5–7 phút](docs/kich-ban-demo.md) (US11 / T25, T26).
 - [Quy trình Git Flow của nhóm](docs/git-flow.md).
+
+## Hướng dẫn chạy thử nghiệm trên máy (Local Development)
+
+### 1. Khởi chạy Backend Worker & CSDL D1 Local
+```bash
+cd backend
+npm install
+npm run db:migrate:local   # Áp dụng 3 file migration và nạp sách/đơn mẫu vào SQLite local
+npm run dev                # Khởi động Worker tại http://127.0.0.1:8787
+```
+
+### 2. Khởi chạy Frontend React + Vite
+```bash
+cd frontend
+npm install
+npm run dev                # Khởi động giao diện web tại http://127.0.0.1:5173
+```
+Mở trình duyệt truy cập `http://127.0.0.1:5173` để trải nghiệm toàn bộ hệ thống!
+
+---
 
 Quy trình nhánh: `main` → `develop` → `feature/<ten-cong-viec>`. Chi tiết xem tại [Tài liệu Git Flow](docs/git-flow.md).
