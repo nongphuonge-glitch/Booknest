@@ -1,5 +1,6 @@
 import { handleAuth, requireUser } from "./auth";
 import { getCategories, getBooks, getBookDetail, getAdminBooks, createAdminBook, updateAdminBook } from "./books";
+import { createOrder } from "./orders";
 import type { Env } from "./auth";
 
 export default {
@@ -19,6 +20,11 @@ export default {
     if (request.method === "GET" && url.pathname.startsWith("/api/books/")) {
       const id = decodeURIComponent(url.pathname.replace("/api/books/", "").trim());
       if (id) return getBookDetail(env, id);
+    }
+
+    // Orders APIs (US07, BR04, BR05)
+    if (request.method === "POST" && url.pathname === "/api/orders") {
+      return createOrder(request, env);
     }
 
     // Admin Books & Inventory APIs (US05, US06, BR02, BR04)
