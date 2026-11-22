@@ -86,6 +86,13 @@ export default function App() {
   }
 
   function handleAddToCart(book: Book) {
+    if (!user) {
+      triggerToast("Vui lòng đăng nhập hoặc đăng ký để thêm sách vào giỏ và đặt hàng!");
+      setCurrentTab("account");
+      setMode("login");
+      return;
+    }
+
     if (book.stock <= 0) {
       triggerToast(`Cuốn sách "${book.title}" hiện đã hết hàng.`);
       return;
@@ -210,6 +217,22 @@ export default function App() {
 
   return (
     <div className="site-shell">
+      {/* Guest Notice Top Banner */}
+      {!user && !loadingSession && (
+        <div className="guest-alert-banner" role="banner">
+          <span>✨ Bạn đang xem tủ sách ở chế độ khách vãng lai. Chỉ có thể xem thông tin sách.</span>
+          <button
+            type="button"
+            onClick={() => {
+              setCurrentTab("account");
+              setMode("login");
+            }}
+          >
+            Đăng nhập / Đăng ký để thao tác ↗
+          </button>
+        </div>
+      )}
+
       {/* Topbar navigation */}
       <header className="topbar">
         <a
@@ -236,7 +259,15 @@ export default function App() {
           <button
             type="button"
             className={`nav-tab ${currentTab === "cart" ? "active" : ""}`}
-            onClick={() => setCurrentTab("cart")}
+            onClick={() => {
+              if (!user) {
+                triggerToast("Vui lòng đăng nhập hoặc đăng ký để quản lý giỏ sách và đặt hàng.");
+                setCurrentTab("account");
+                setMode("login");
+              } else {
+                setCurrentTab("cart");
+              }
+            }}
           >
             Giỏ sách
             {totalCartCount > 0 && <span className="cart-badge">{totalCartCount}</span>}
@@ -270,38 +301,78 @@ export default function App() {
           )}
           <button
             type="button"
-            className={`nav-tab ${currentTab === "account" ? "active" : ""}`}
+            className={`nav-tab ${currentTab === "account" ? "active" : ""} ${!user ? "nav-login-cta" : ""}`}
             onClick={() => setCurrentTab("account")}
           >
-            {user ? user.displayName.split(" ")[0] : "Tài khoản"}
+            {user ? user.displayName.split(" ")[0] : "Đăng nhập / Đăng ký ↗"}
           </button>
         </nav>
       </header>
 
       {/* Main Content Tabs */}
       <main>
-        {currentTab === "shop" && <BookCatalog onAddToCart={handleAddToCart} />}
+        {currentTab === "shop" && (
+          <BookCatalog isLoggedIn={!!user} onAddToCart={handleAddToCart} />
+        )}
 
         {currentTab === "cart" && (
-          <Cart
-            cart={cart}
-            onUpdateQty={handleUpdateQty}
-            onRemoveItem={handleRemoveItem}
-            onClearCart={handleClearCart}
-            onProceedToCheckout={() => {
-              if (!user) {
-                triggerToast("Vui lòng đăng nhập để tiến hành đặt hàng COD.");
-                setCurrentTab("account");
-              } else {
-                setIsCheckoutOpen(true);
-              }
-            }}
-            onExplore={() => setCurrentTab("shop")}
-          />
+          user ? (
+            <Cart
+              cart={cart}
+              onUpdateQty={handleUpdateQty}
+              onRemoveItem={handleRemoveItem}
+              onClearCart={handleClearCart}
+              onProceedToCheckout={() => {
+                if (!user) {
+                  triggerToast("Vui lòng đăng nhập để tiến hành đặt hàng COD.");
+                  setCurrentTab("account");
+                  setMode("login");
+                } else {
+                  setIsCheckoutOpen(true);
+                }
+              }}
+              onExplore={() => setCurrentTab("shop")}
+            />
+          ) : (
+            <div className="cart-container empty">
+              <span className="eyebrow"><span className="eyebrow-line" /> YÊU CẦU ĐĂNG NHẬP</span>
+              <h2>Giỏ sách yêu cầu tài khoản</h2>
+              <div className="guest-notice-card">
+                <p>Bạn đang duyệt BookNest ở chế độ khách vãng lai.</p>
+                <p className="subtext">Vui lòng đăng nhập hoặc tạo tài khoản mới để thêm sách vào giỏ, điều chỉnh số lượng và đặt hàng COD.</p>
+                <button
+                  className="primary-button"
+                  onClick={() => {
+                    setCurrentTab("account");
+                    setMode("login");
+                  }}
+                >
+                  Đăng nhập / Đăng ký ngay <span aria-hidden="true">↗</span>
+                </button>
+              </div>
+            </div>
+          )
         )}
 
         {currentTab === "orders" && (
-          <CustomerOrders onExplore={() => setCurrentTab("shop")} />
+          user ? (
+            <CustomerOrders onExplore={() => setCurrentTab("shop")} />
+          ) : (
+            <div className="orders-container">
+              <div className="guest-notice-card">
+                <p>Vui lòng đăng nhập để xem lịch sử đơn hàng của bạn.</p>
+                <button
+                  className="primary-button"
+                  onClick={() => {
+                    setCurrentTab("account");
+                    setMode("login");
+                  }}
+                >
+                  Đăng nhập ngay <span aria-hidden="true">↗</span>
+                </button>
+              </div>
+            </div>
+          )
         )}
 
         {currentTab === "admin_books" && <AdminBooks />}
