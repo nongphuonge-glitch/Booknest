@@ -1,5 +1,6 @@
 import { handleAuth, requireUser } from "./auth";
 import { getCategories, getBooks, getBookDetail, getAdminBooks, createAdminBook, updateAdminBook } from "./books";
+import { createOrder, getCustomerOrders, getAdminOrders, updateOrderStatus } from "./orders";
 import type { Env } from "./auth";
 
 export default {
@@ -19,6 +20,32 @@ export default {
     if (request.method === "GET" && url.pathname.startsWith("/api/books/")) {
       const id = decodeURIComponent(url.pathname.replace("/api/books/", "").trim());
       if (id) return getBookDetail(env, id);
+    }
+
+    // Orders APIs (US07, US08, BR02, BR04, BR05)
+    if (request.method === "POST" && url.pathname === "/api/orders") {
+      return createOrder(request, env);
+    }
+
+    if (request.method === "GET" && url.pathname === "/api/orders/my") {
+      return getCustomerOrders(request, env);
+    }
+
+    if (url.pathname === "/api/admin/orders") {
+      const auth = await requireUser(request, env, "admin");
+      if (auth instanceof Response) return auth;
+      if (request.method === "GET") return getAdminOrders(env);
+    }
+
+    if (url.pathname.startsWith("/api/admin/orders/") && url.pathname.endsWith("/status")) {
+      const auth = await requireUser(request, env, "admin");
+      if (auth instanceof Response) return auth;
+      const orderId = decodeURIComponent(
+        url.pathname.replace("/api/admin/orders/", "").replace("/status", "").trim(),
+      );
+      if (orderId && request.method === "PATCH") {
+        return updateOrderStatus(request, env, orderId);
+      }
     }
 
     // Admin Books & Inventory APIs (US05, US06, BR02, BR04)
