@@ -1,5 +1,5 @@
 import { handleAuth, requireUser } from "./auth";
-import { getCategories, getBooks, getBookDetail } from "./books";
+import { getCategories, getBooks, getBookDetail, getAdminBooks, createAdminBook, updateAdminBook } from "./books";
 import type { Env } from "./auth";
 
 export default {
@@ -19,6 +19,21 @@ export default {
     if (request.method === "GET" && url.pathname.startsWith("/api/books/")) {
       const id = decodeURIComponent(url.pathname.replace("/api/books/", "").trim());
       if (id) return getBookDetail(env, id);
+    }
+
+    // Admin Books & Inventory APIs (US05, US06, BR02, BR04)
+    if (url.pathname === "/api/admin/books") {
+      const auth = await requireUser(request, env, "admin");
+      if (auth instanceof Response) return auth;
+      if (request.method === "GET") return getAdminBooks(env);
+      if (request.method === "POST") return createAdminBook(request, env);
+    }
+
+    if (url.pathname.startsWith("/api/admin/books/")) {
+      const auth = await requireUser(request, env, "admin");
+      if (auth instanceof Response) return auth;
+      const id = decodeURIComponent(url.pathname.replace("/api/admin/books/", "").trim());
+      if (id && request.method === "PATCH") return updateAdminBook(request, env, id);
     }
 
     if (request.method === "GET" && url.pathname === "/api/admin/me") {
