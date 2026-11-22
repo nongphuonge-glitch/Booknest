@@ -48,6 +48,7 @@ Dự án **BookNest** ra đời nhằm giải quyết bài toán:
   * `BR03 (Sách đang bán)`: Khách hàng chỉ có thể tìm thấy, thêm vào giỏ và đặt mua những cuốn sách có trạng thái `is_active = 1`.
   * `BR04 (Kiểm tra tồn kho & Giao dịch nguyên tử)`: Đặt mua và trừ tồn kho diễn ra trong cùng một transaction. Tuyệt đối không cho phép tồn kho âm.
   * `BR05 (Tính tiền phía máy chủ)`: Toàn bộ đơn giá và phí ship được tính toán tại Server, không tin tưởng giá trị gửi lên từ trình duyệt.
+  * `BR07 (Ràng buộc thao tác khách vãng lai)`: Khách chưa đăng nhập chỉ được xem danh mục sách và chi tiết cuốn sách; mọi thao tác tương tác như thêm giỏ sách, xem giỏ, đặt hàng COD, tra cứu đơn và quản trị đều bắt buộc phải đăng nhập hoặc đăng ký tài khoản.
 
 ### 1.3. Mô hình Thực thể - Liên kết (ERD Tổng thể)
 

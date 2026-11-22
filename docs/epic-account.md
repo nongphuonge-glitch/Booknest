@@ -7,6 +7,7 @@
 | BOOK-27 | API đăng ký băm mật khẩu, chuẩn hóa email, từ chối email trùng. |
 | BOOK-31 | Đăng nhập, phiên cookie, đăng xuất thu hồi phiên và hàm kiểm tra quyền API. |
 | BOOK-30 | Form gọi API qua Vite proxy; hiển thị tên sau đăng nhập và lỗi khi sai mật khẩu. |
+| POLICY-01 | Ràng buộc khách vãng lai: chỉ cho phép xem tủ sách và chi tiết sách; mọi thao tác thêm giỏ, xem giỏ, đặt hàng hoặc quản trị đều yêu cầu đăng nhập/đăng ký. |
 
 Chạy hai tiến trình local theo [backend](../backend/README.md) và [frontend](../frontend/README.md). Luồng kiểm tra: tạo email mới, đăng nhập sai mật khẩu, đăng nhập đúng, tải lại trang để đọc phiên, thử API admin bằng tài khoản khách, đăng xuất và thử dùng lại phiên cũ. Các API quản trị hoặc đơn hàng được thêm về sau phải dùng `requireUser` trước khi truy cập dữ liệu; riêng quyền đọc/sửa đơn thuộc task kiểm tra đơn hàng ở Epic khác.
 
