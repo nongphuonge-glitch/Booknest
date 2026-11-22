@@ -3,10 +3,11 @@ import type { Book, Category } from "../types";
 import { BookDetailModal } from "./BookDetailModal";
 
 interface Props {
+  isLoggedIn: boolean;
   onAddToCart: (book: Book) => void;
 }
 
-export function BookCatalog({ onAddToCart }: Props) {
+export function BookCatalog({ isLoggedIn, onAddToCart }: Props) {
   const [categories, setCategories] = useState<Category[]>([]);
   const [books, setBooks] = useState<Book[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>("Tất cả");
@@ -162,9 +163,15 @@ export function BookCatalog({ onAddToCart }: Props) {
                   <button
                     className="add-cart-btn"
                     onClick={() => onAddToCart(b)}
-                    disabled={b.stock <= 0}
+                    disabled={isLoggedIn && b.stock <= 0}
                     aria-label={`Thêm ${b.title} vào giỏ sách`}
-                    title={b.stock > 0 ? "Thêm vào giỏ" : "Hết hàng"}
+                    title={
+                      !isLoggedIn
+                        ? "Đăng nhập để thêm vào giỏ sách"
+                        : b.stock > 0
+                        ? "Thêm vào giỏ"
+                        : "Hết hàng"
+                    }
                   >
                     +
                   </button>
@@ -178,6 +185,7 @@ export function BookCatalog({ onAddToCart }: Props) {
       {/* Detail Modal */}
       <BookDetailModal
         book={selectedBook}
+        isLoggedIn={isLoggedIn}
         onClose={() => setSelectedBook(null)}
         onAddToCart={onAddToCart}
       />
