@@ -2,11 +2,12 @@ import type { Book } from "../types";
 
 interface Props {
   book: Book | null;
+  isLoggedIn: boolean;
   onClose: () => void;
   onAddToCart: (book: Book) => void;
 }
 
-export function BookDetailModal({ book, onClose, onAddToCart }: Props) {
+export function BookDetailModal({ book, isLoggedIn, onClose, onAddToCart }: Props) {
   if (!book) return null;
 
   const money = (n: number) => n.toLocaleString("vi-VN") + "đ";
@@ -39,9 +40,13 @@ export function BookDetailModal({ book, onClose, onAddToCart }: Props) {
             onAddToCart(book);
             onClose();
           }}
-          disabled={book.stock <= 0}
+          disabled={isLoggedIn && book.stock <= 0}
         >
-          {book.stock > 0 ? "Thêm vào giỏ sách" : "Hết hàng"}
+          {!isLoggedIn
+            ? "Đăng nhập để thêm vào giỏ sách"
+            : book.stock > 0
+            ? "Thêm vào giỏ sách"
+            : "Hết hàng"}
           <span aria-hidden="true">↗</span>
         </button>
       </div>

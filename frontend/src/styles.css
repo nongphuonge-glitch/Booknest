@@ -287,3 +287,14 @@ h2 em{color:#ab7953;font-weight:500}
 .price-breakdown{display:flex;flex-direction:column;align-items:flex-end;gap:4px;font-size:12px;color:#748074}
 .total-highlight{font-size:14px;color:#243628}
 .total-highlight strong{font-size:20px;color:#284b37}
+
+/* --- GUEST RESTRICTION & BANNER STYLES --- */
+.guest-alert-banner{background:#22392c;color:#f0e8d8;font-size:12px;padding:9px clamp(16px,4vw,60px);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.guest-alert-banner span{display:flex;align-items:center;gap:6px}
+.guest-alert-banner button{background:#b88154;color:#fff;border:0;padding:4px 14px;border-radius:14px;font-size:11px;font-weight:700;cursor:pointer;transition:background .2s}
+.guest-alert-banner button:hover{background:#ca9264}
+.nav-login-cta{background:#b88154!important;color:#fff!important;border-radius:20px;padding:8px 16px!important}
+.nav-login-cta:hover{background:#ca9264!important}
+.guest-notice-card{background:#fff;border:1px solid #e3e0d4;border-radius:10px;padding:40px 30px;max-width:500px;margin:30px auto;text-align:center}
+.guest-notice-card p{font-size:15px;color:#354237;margin:0 0 10px}
+.guest-notice-card .subtext{font-size:13px;color:#788278;margin-bottom:24px}
