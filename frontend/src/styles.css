@@ -54,3 +54,156 @@ h2 em{color:#ab7953;font-weight:500}
 .auth-footer{width:100%;display:flex;justify-content:space-between;gap:15px;color:#a2a69e;font-size:10px;letter-spacing:.03em;padding-top:30px}
 @media(max-width:900px){.main-grid{grid-template-columns:1fr}.story-panel{min-height:340px;padding:45px 7vw}.story-content{max-width:600px}.story-panel h1{font-size:clamp(40px,6vw,56px);margin:25px 0 14px}.story-content>p{font-size:13px;max-width:420px}.story-rule,.story-footer{display:none}.book-illustration{transform:rotate(-12deg) scale(.58);transform-origin:right bottom;right:5px;bottom:-14px;opacity:.5}.auth-panel{min-height:590px;padding:55px 30px 24px}}
 @media(max-width:560px){.topbar{height:64px;padding:0 22px}.topbar-note{display:none}.main-grid{min-height:calc(100vh - 64px)}.story-panel{min-height:235px;padding:29px 25px}.story-panel h1{font-size:37px;line-height:1.2;margin:19px 0 0}.story-content>p{display:none}.book-illustration{transform:rotate(-12deg) scale(.38);right:-25px;bottom:-25px;opacity:.4}.auth-panel{padding:41px 25px 24px;min-height:560px}h2{font-size:44px}.auth-footer span:last-child{display:none}}
+
+/* --- TỦ SÁCH & MODAL STYLES --- */
+.nav-links{display:flex;align-items:center;gap:12px}
+.nav-tab{background:none;border:0;padding:8px 14px;border-radius:20px;font-size:13px;font-weight:600;color:#556358;transition:all .2s}
+.nav-tab:hover{background:#ebe9e1;color:#243b2d}
+.nav-tab.active{background:#284b37;color:#fff}
+.cart-badge{margin-left:6px;background:rgba(255,255,255,.25);border-radius:10px;padding:2px 7px;font-size:11px}
+.nav-tab:not(.active) .cart-badge{background:#e0ded5;color:#284b37}
+
+.catalog-container{max-width:1200px;margin:0 auto;padding:20px clamp(20px,4vw,60px) 60px}
+.catalog-hero{padding:30px 0 20px;border-bottom:1px solid #e5e3d9;margin-bottom:30px}
+.hero-text h1{margin:18px 0 12px;font-size:clamp(38px,4vw,56px);line-height:1.15}
+.hero-text p{color:#6c756b;font-size:15px;max-width:550px;line-height:1.7}
+.hero-tags{display:flex;gap:20px;margin-top:20px;font-size:12px;color:#798177}
+
+.catalog-controls{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:24px;flex-wrap:wrap}
+.search-bar{display:flex;align-items:center;background:#fff;border:1px solid #d9ddd4;border-radius:6px;padding:0 14px;flex:1;min-width:260px;max-width:480px;height:46px}
+.search-icon{color:#889085;font-size:18px;margin-right:10px}
+.search-bar input{border:0;outline:none;width:100%;font-size:14px;background:transparent}
+.sort-bar{display:flex;align-items:center;gap:10px;font-size:13px;color:#5c665e}
+.sort-bar select{height:44px;padding:0 14px;border:1px solid #d9ddd4;border-radius:6px;background:#fff;font-size:13px;outline:none;color:#283028}
+
+.category-pills{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:30px}
+.category-pills button{background:#ebe9e1;border:0;padding:8px 18px;border-radius:24px;font-size:13px;font-weight:600;color:#556358;white-space:nowrap;transition:all .2s}
+.category-pills button.active{background:#284b37;color:#fff}
+
+.books-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:28px 22px}
+.book-card{background:#fff;border:1px solid #e8e6dc;border-radius:8px;padding:16px;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.book-card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.06)}
+.card-cover-wrap{background:#f3f1e9;border:0;border-radius:6px;padding:18px 10px;display:grid;place-items:center;cursor:pointer}
+.cover-art{width:130px;height:185px;color:#fff8e8;border-radius:3px 6px 6px 3px;border-left:6px solid rgba(0,0,0,.2);box-shadow:4px 6px 12px rgba(0,0,0,.2);display:flex;flex-direction:column;justify-content:space-between;padding:14px 10px;text-align:center;transition:transform .25s}
+.card-cover-wrap:hover .cover-art{transform:rotate(-3deg) scale(1.03)}
+.cover-art small{font-size:7px;letter-spacing:1.5px}
+.cover-art strong{font-family:'Playfair Display',Georgia,serif;font-size:18px;line-height:1.2;margin:10px 0}
+.cover-art .symbol{font-size:38px;color:#ffe8a8}
+.cover-art span{font-size:7px;letter-spacing:1px}
+
+.card-info{display:flex;flex-direction:column;flex:1;margin-top:14px}
+.card-cat{font-size:10px;font-weight:700;color:#ab7953;letter-spacing:.08em;text-transform:uppercase}
+.card-info h3{font-family:'DM Sans',Arial,sans-serif;font-size:15px;font-weight:700;margin:6px 0 4px;color:#243b2d;cursor:pointer;line-height:1.35}
+.card-info h3:hover{color:#ab7953}
+.card-author{font-size:12px;color:#7e877e;margin:0 0 12px}
+.card-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:auto}
+.card-price{font-size:15px;font-weight:700;color:#284b37}
+.add-cart-btn{width:36px;height:36px;border-radius:50%;background:#284b37;color:#fff;border:0;font-size:20px;display:grid;place-items:center;transition:all .2s}
+.add-cart-btn:hover:not(:disabled){background:#3a6e50;transform:scale(1.08)}
+.add-cart-btn:disabled{opacity:.4;cursor:not-allowed}
+
+.modal-backdrop{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(18,33,26,.65);display:grid;place-items:center;z-index:100;padding:20px}
+.modal-content{background:#fdfcf9;border:1px solid #dcd9ce;border-radius:10px;max-width:480px;width:100%;padding:32px 28px;position:relative;box-shadow:0 15px 40px rgba(0,0,0,.25)}
+.modal-close{position:absolute;top:16px;right:18px;background:none;border:0;font-size:18px;color:#7a8378;cursor:pointer}
+.detail-author{font-size:13px;color:#6d776e;margin:4px 0 16px}
+.detail-cover-wrap{display:grid;place-items:center;padding:15px 0;margin:12px 0}
+.detail-cover-wrap .cover-art{width:150px;height:215px}
+.detail-desc{font-size:13px;line-height:1.8;color:#566157;margin:16px 0}
+.detail-meta{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid #e8e5dc;margin-bottom:12px}
+.price-tag{font-size:22px;font-weight:700;color:#284b37}
+.stock-tag{font-size:12px;background:#e7f0e8;color:#356743;padding:5px 10px;border-radius:15px;font-weight:600}
+
+.catalog-loading,.catalog-empty{text-align:center;padding:50px 20px;color:#7b857a;font-size:14px}
+.secondary-button{padding:10px 20px;background:#ebe9e1;border:0;border-radius:5px;font-size:13px;font-weight:600;margin-top:10px}
+
+/* --- GIỎ SÁCH (CART) STYLES --- */
+.cart-container{max-width:1100px;margin:0 auto;padding:30px clamp(20px,4vw,50px) 70px}
+.cart-container.empty{text-align:center;padding:60px 20px}
+.empty-cart-box{background:#fff;border:1px solid #e5e3d8;border-radius:10px;padding:50px 30px;max-width:480px;margin:30px auto}
+.empty-cart-box p{font-size:16px;color:#39443b;margin:0 0 8px}
+.empty-cart-box .subtext{font-size:13px;color:#7e877e;margin-bottom:28px}
+
+.cart-header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid #e3e0d5;padding-bottom:18px;margin-bottom:28px}
+.cart-header h2{margin:8px 0 0;font-size:32px}
+.text-button{background:none;border:0;color:#9b4e36;font-size:13px;font-weight:600;padding:6px 10px;cursor:pointer}
+.text-button:hover{text-decoration:underline}
+
+.cart-grid{display:grid;grid-template-columns:1fr 340px;gap:35px;align-items:start}
+.cart-items-list{display:flex;flex-direction:column;gap:14px}
+.cart-item-row{background:#fff;border:1px solid #e5e2d6;border-radius:8px;padding:16px 20px;display:flex;align-items:center;gap:18px}
+.cart-item-mini-cover{width:46px;height:62px;border-radius:4px;display:grid;place-items:center;color:#fff;font-size:22px;flex-shrink:0}
+.cart-item-info{flex:1;min-width:0}
+.cart-item-info h3{font-size:15px;margin:0 0 4px;color:#253c2e;line-height:1.3}
+.cart-item-author{font-size:12px;color:#7b847a;margin:0 0 6px}
+.cart-item-price-unit{font-size:12px;color:#9b6f4a;font-weight:600}
+
+.qty-controls{display:flex;align-items:center;gap:8px;background:#f3f1e8;border-radius:6px;padding:4px 6px}
+.qty-controls button{width:28px;height:28px;border:0;background:#fff;border-radius:4px;font-size:16px;font-weight:700;display:grid;place-items:center;color:#284a37}
+.qty-controls button:disabled{opacity:.35;cursor:not-allowed}
+.qty-value{min-width:24px;text-align:center;font-size:14px;font-weight:700}
+
+.cart-item-total{font-size:15px;font-weight:700;color:#284b37;min-width:100px;text-align:right}
+.remove-btn{background:none;border:0;color:#a2aba0;font-size:16px;cursor:pointer;padding:4px 8px;border-radius:4px}
+.remove-btn:hover{color:#b33e24;background:#fbeee9}
+
+.order-summary-box{background:#fff;border:1px solid #e2ded1;border-radius:10px;padding:26px 24px}
+.order-summary-box h3{font-size:18px;margin:0 0 20px;color:#243b2d}
+.summary-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#667066;margin-bottom:14px}
+.summary-row strong{color:#26382c;font-size:14px}
+.free-ship{color:#2d7d46!important}
+.shipping-hint{font-size:12px;color:#5a685c;background:#f0f5ee;padding:10px 12px;border-radius:6px;line-height:1.5;margin:16px 0}
+.shipping-hint strong{color:#2c6b3e}
+.summary-divider{height:1px;background:#e5e2d6;margin:18px 0}
+.total-row{font-size:16px;color:#243b2d;font-weight:700}
+.total-price{font-size:24px;color:#284b37}
+.checkout-btn{margin-top:20px}
+
+@media(max-width:860px){
+  .cart-grid{grid-template-columns:1fr}
+  .cart-item-row{flex-wrap:wrap}
+  .cart-item-total{text-align:left}
+}
+
+/* --- ADMIN BOOKS & TOAST STYLES --- */
+.admin-container{max-width:1200px;margin:0 auto;padding:30px clamp(20px,4vw,50px) 70px}
+.admin-header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid #e3e0d5;padding-bottom:20px;margin-bottom:26px;flex-wrap:wrap;gap:18px}
+.admin-header h2{margin:6px 0 6px;font-size:32px}
+.admin-subhead{color:#6c756b;font-size:14px;margin:0}
+.add-book-toggle{width:auto;margin:0;padding:0 22px;height:46px}
+
+.add-book-card{background:#fff;border:1px solid #dcd8cb;border-radius:10px;padding:26px;margin-bottom:32px;box-shadow:0 6px 20px rgba(0,0,0,.04)}
+.add-book-card h3{margin:0 0 18px;font-size:18px;color:#243b2d}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.add-book-card .field{margin-bottom:12px}
+.add-book-card textarea{width:100%;border:1px solid #d9ddd4;border-radius:5px;padding:10px;font-family:inherit;font-size:13px}
+.add-book-card select{width:100%;height:49px;border:1px solid #d9ddd4;background:#fff;border-radius:5px;padding:0 12px;font-size:13px}
+
+.table-wrapper{background:#fff;border:1px solid #e2ded2;border-radius:10px;overflow-x:auto}
+.admin-table{width:100%;border-collapse:collapse;font-size:13px;text-align:left}
+.admin-table th{background:#f5f3ec;padding:14px 16px;color:#475449;font-weight:700;border-bottom:1px solid #e2ded2}
+.admin-table td{padding:14px 16px;border-bottom:1px solid #edebe4;vertical-align:middle}
+.admin-table tr:hover{background:#faf9f5}
+.row-hidden{background:#fbfaf8;opacity:.8}
+
+.table-mini-cover{width:34px;height:46px;border-radius:3px;display:grid;place-items:center;color:#fff;font-size:16px}
+.table-subtext{font-size:11px;color:#7e877e;margin-top:2px}
+.badge-cat{background:#efece2;color:#6d533b;padding:3px 8px;border-radius:12px;font-size:11px;font-weight:600}
+.table-price{font-weight:700;color:#284b37}
+
+.stock-edit-cell{display:flex;align-items:center;gap:6px}
+.stock-input{width:64px;height:34px;border:1px solid #d2d6cd;border-radius:4px;padding:0 6px;text-align:center;font-size:13px;font-weight:700}
+.small-btn{padding:6px 12px;border-radius:4px;font-size:12px;font-weight:600;border:0;cursor:pointer;transition:all .15s}
+.save-stock-btn{background:#284b37;color:#fff}
+.save-stock-btn:hover:not(:disabled){background:#3a6e50}
+
+.status-pill{padding:4px 9px;border-radius:12px;font-size:11px;font-weight:700}
+.status-active{background:#e4f3e6;color:#2c743e}
+.status-hidden{background:#f5eee9;color:#9b4934}
+
+.btn-hide{background:#fdf2ee;color:#a8432a;border:1px solid #f3d6cc}
+.btn-hide:hover{background:#f9e4dc}
+.btn-show{background:#edf6ee;color:#2b6f3c;border:1px solid #cce5d1}
+.btn-show:hover{background:#deeedf}
+
+.toast-banner{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#233d2e;color:#fff;padding:12px 24px;border-radius:30px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:999;display:flex;align-items:center;gap:10px;animation:fadeInUp .25s ease-out}
+@keyframes fadeInUp{from{opacity:0;transform:translate(-50%,15px)}to{opacity:1;transform:translate(-50%,0)}}
