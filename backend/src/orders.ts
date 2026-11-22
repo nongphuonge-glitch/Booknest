@@ -192,3 +192,109 @@ export async function createOrder(request: Request, env: Env): Promise<Response>
     { status: 201 },
   );
 }
+
+export async function getCustomerOrders(request: Request, env: Env): Promise<Response> {
+  const auth = await requireUser(request, env);
+  if (auth instanceof Response) return auth;
+  const user = auth as CurrentUser;
+
+  const ordersResult = await env.DB.prepare(`
+    SELECT id, user_id, customer_name, phone, address, note, subtotal, shipping_fee, total, payment_method, status, created_at, updated_at
+    FROM orders
+    WHERE user_id = ?
+    ORDER BY created_at DESC
+  `).bind(user.id).all<Order>();
+
+  const orders = ordersResult.results;
+
+  // Load items for each order
+  for (const order of orders) {
+    const itemsResult = await env.DB.prepare(`
+      SELECT id, order_id, book_id, title, price, quantity, total_price
+      FROM order_items
+      WHERE order_id = ?
+    `).bind(order.id).all<OrderItem>();
+    order.items = itemsResult.results;
+  }
+
+  return Response.json({ orders });
+}
+
+export async function getAdminOrders(env: Env): Promise<Response> {
+  const ordersResult = await env.DB.prepare(`
+    SELECT id, user_id, customer_name, phone, address, note, subtotal, shipping_fee, total, payment_method, status, created_at, updated_at
+    FROM orders
+    ORDER BY created_at DESC
+  `).all<Order>();
+
+  const orders = ordersResult.results;
+
+  for (const order of orders) {
+    const itemsResult = await env.DB.prepare(`
+      SELECT id, order_id, book_id, title, price, quantity, total_price
+      FROM order_items
+      WHERE order_id = ?
+    `).bind(order.id).all<OrderItem>();
+    order.items = itemsResult.results;
+  }
+
+  return Response.json({ orders });
+}
+
+const VALID_STATUSES = ["Chờ xác nhận", "Đã xác nhận", "Đang giao", "Hoàn thành", "Đã hủy"] as const;
+
+export async function updateOrderStatus(request: Request, env: Env, orderId: string): Promise<Response> {
+  const existing = await env.DB.prepare("SELECT * FROM orders WHERE id = ?").bind(orderId).first<Order>();
+  if (!existing) {
+    return Response.json({ error: "Đơn hàng không tồn tại" }, { status: 404 });
+  }
+
+  let body: { status?: string };
+  try {
+    body = (await request.json()) as { status?: string };
+  } catch {
+    return Response.json({ error: "Dữ liệu JSON không hợp lệ" }, { status: 400 });
+  }
+
+  const nextStatus = body.status?.trim() as (typeof VALID_STATUSES)[number];
+  if (!nextStatus || !VALID_STATUSES.includes(nextStatus)) {
+    return Response.json(
+      { error: `Trạng thái không hợp lệ. Phải là một trong: ${VALID_STATUSES.join(", ")}` },
+      { status: 400 },
+    );
+  }
+
+  const now = new Date().toISOString();
+
+  // If order is changed to 'Đã hủy' and wasn't previously 'Đã hủy', restore stock!
+  if (nextStatus === "Đã hủy" && existing.status !== "Đã hủy") {
+    const items = await env.DB.prepare(
+      "SELECT book_id, quantity FROM order_items WHERE order_id = ?",
+    ).bind(orderId).all<{ book_id: string; quantity: number }>();
+
+    const statements: D1PreparedStatement[] = [
+      env.DB.prepare("UPDATE orders SET status = ?, updated_at = ? WHERE id = ?").bind(nextStatus, now, orderId),
+    ];
+
+    for (const item of items.results) {
+      statements.push(
+        env.DB.prepare("UPDATE books SET stock = stock + ?, updated_at = ? WHERE id = ?").bind(
+          item.quantity,
+          now,
+          item.book_id,
+        ),
+      );
+    }
+
+    await env.DB.batch(statements);
+  } else {
+    await env.DB.prepare("UPDATE orders SET status = ?, updated_at = ? WHERE id = ?").bind(
+      nextStatus,
+      now,
+      orderId,
+    ).run();
+  }
+
+  const updated = await env.DB.prepare("SELECT * FROM orders WHERE id = ?").bind(orderId).first<Order>();
+  return Response.json({ order: updated });
+}
