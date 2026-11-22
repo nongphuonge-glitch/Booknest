@@ -163,3 +163,47 @@ h2 em{color:#ab7953;font-weight:500}
   .cart-item-row{flex-wrap:wrap}
   .cart-item-total{text-align:left}
 }
+
+/* --- ADMIN BOOKS & TOAST STYLES --- */
+.admin-container{max-width:1200px;margin:0 auto;padding:30px clamp(20px,4vw,50px) 70px}
+.admin-header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid #e3e0d5;padding-bottom:20px;margin-bottom:26px;flex-wrap:wrap;gap:18px}
+.admin-header h2{margin:6px 0 6px;font-size:32px}
+.admin-subhead{color:#6c756b;font-size:14px;margin:0}
+.add-book-toggle{width:auto;margin:0;padding:0 22px;height:46px}
+
+.add-book-card{background:#fff;border:1px solid #dcd8cb;border-radius:10px;padding:26px;margin-bottom:32px;box-shadow:0 6px 20px rgba(0,0,0,.04)}
+.add-book-card h3{margin:0 0 18px;font-size:18px;color:#243b2d}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.add-book-card .field{margin-bottom:12px}
+.add-book-card textarea{width:100%;border:1px solid #d9ddd4;border-radius:5px;padding:10px;font-family:inherit;font-size:13px}
+.add-book-card select{width:100%;height:49px;border:1px solid #d9ddd4;background:#fff;border-radius:5px;padding:0 12px;font-size:13px}
+
+.table-wrapper{background:#fff;border:1px solid #e2ded2;border-radius:10px;overflow-x:auto}
+.admin-table{width:100%;border-collapse:collapse;font-size:13px;text-align:left}
+.admin-table th{background:#f5f3ec;padding:14px 16px;color:#475449;font-weight:700;border-bottom:1px solid #e2ded2}
+.admin-table td{padding:14px 16px;border-bottom:1px solid #edebe4;vertical-align:middle}
+.admin-table tr:hover{background:#faf9f5}
+.row-hidden{background:#fbfaf8;opacity:.8}
+
+.table-mini-cover{width:34px;height:46px;border-radius:3px;display:grid;place-items:center;color:#fff;font-size:16px}
+.table-subtext{font-size:11px;color:#7e877e;margin-top:2px}
+.badge-cat{background:#efece2;color:#6d533b;padding:3px 8px;border-radius:12px;font-size:11px;font-weight:600}
+.table-price{font-weight:700;color:#284b37}
+
+.stock-edit-cell{display:flex;align-items:center;gap:6px}
+.stock-input{width:64px;height:34px;border:1px solid #d2d6cd;border-radius:4px;padding:0 6px;text-align:center;font-size:13px;font-weight:700}
+.small-btn{padding:6px 12px;border-radius:4px;font-size:12px;font-weight:600;border:0;cursor:pointer;transition:all .15s}
+.save-stock-btn{background:#284b37;color:#fff}
+.save-stock-btn:hover:not(:disabled){background:#3a6e50}
+
+.status-pill{padding:4px 9px;border-radius:12px;font-size:11px;font-weight:700}
+.status-active{background:#e4f3e6;color:#2c743e}
+.status-hidden{background:#f5eee9;color:#9b4934}
+
+.btn-hide{background:#fdf2ee;color:#a8432a;border:1px solid #f3d6cc}
+.btn-hide:hover{background:#f9e4dc}
+.btn-show{background:#edf6ee;color:#2b6f3c;border:1px solid #cce5d1}
+.btn-show:hover{background:#deeedf}
+
+.toast-banner{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#233d2e;color:#fff;padding:12px 24px;border-radius:30px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:999;display:flex;align-items:center;gap:10px;animation:fadeInUp .25s ease-out}
+@keyframes fadeInUp{from{opacity:0;transform:translate(-50%,15px)}to{opacity:1;transform:translate(-50%,0)}}
