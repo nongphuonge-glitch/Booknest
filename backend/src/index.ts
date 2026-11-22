@@ -1,4 +1,5 @@
 import { handleAuth, requireUser } from "./auth";
+import { getCategories, getBooks, getBookDetail } from "./books";
 import type { Env } from "./auth";
 
 export default {
@@ -6,6 +7,19 @@ export default {
     const url = new URL(request.url);
     const authResponse = await handleAuth(request, env, url.pathname);
     if (authResponse) return authResponse;
+
+    if (request.method === "GET" && url.pathname === "/api/categories") {
+      return getCategories(env);
+    }
+
+    if (request.method === "GET" && url.pathname === "/api/books") {
+      return getBooks(request, env);
+    }
+
+    if (request.method === "GET" && url.pathname.startsWith("/api/books/")) {
+      const id = decodeURIComponent(url.pathname.replace("/api/books/", "").trim());
+      if (id) return getBookDetail(env, id);
+    }
 
     if (request.method === "GET" && url.pathname === "/api/admin/me") {
       const result = await requireUser(request, env, "admin");
