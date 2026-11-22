@@ -25,10 +25,15 @@ Bố cục cấp cao theo dự án `nguon-goc-so`: tách backend, frontend và t
 - [Giao diện tài khoản và hướng dẫn chạy](frontend/README.md) (BOOK-28 / BOOK-30).
 - [Tiến độ Epic tài khoản](docs/epic-account.md).
 - [Tiến độ Epic Danh mục & Tồn kho](docs/epic-catalog-inventory.md) (US03, US04, US05, US06).
+- [Tiến độ Epic Đơn hàng COD & Tích hợp](docs/epic-orders.md) (US07, US08, US09).
 - [Mô hình dữ liệu sách và danh mục](docs/books-data-model.md).
+- [Mô hình dữ liệu đơn hàng COD](docs/orders-data-model.md).
 - [Migration books và categories](backend/db/migrations/0002_books.sql).
+- [Migration orders và order_items](backend/db/migrations/0003_orders.sql).
 - [Hợp đồng API Tủ sách & Danh mục](docs/api/books/catalog.md).
 - [Hợp đồng API Quản trị Sách & Tồn kho](docs/api/books/admin.md).
+- [Hợp đồng API Đặt hàng COD](docs/api/orders/checkout.md).
+- [Hợp đồng API Quản trị & Lịch sử Đơn hàng](docs/api/orders/admin.md).
 - [Quy trình Git Flow của nhóm](docs/git-flow.md).
 
 Quy trình nhánh: `main` → `develop` → `feature/<ten-cong-viec>`. Chi tiết xem tại [Tài liệu Git Flow](docs/git-flow.md).
