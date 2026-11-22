@@ -24,5 +24,6 @@ Bố cục cấp cao theo dự án `nguon-goc-so`: tách backend, frontend và t
 - [API phiên và phân quyền](docs/api/auth/session.md) (US02 / T04).
 - [Giao diện tài khoản và hướng dẫn chạy](frontend/README.md) (BOOK-28 / BOOK-30).
 - [Tiến độ Epic tài khoản](docs/epic-account.md).
+- [Quy trình Git Flow của nhóm](docs/git-flow.md).
 
-Quy trình nhánh: `main` → `develop` → `feature/<ten-cong-viec>`. Tính năng được làm trên feature rồi gộp vào `develop` sau khi kiểm tra.
+Quy trình nhánh: `main` → `develop` → `feature/<ten-cong-viec>`. Chi tiết xem tại [Tài liệu Git Flow](docs/git-flow.md).
