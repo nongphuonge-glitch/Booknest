@@ -1,11 +1,14 @@
 import { useEffect, useState, type FormEvent } from "react";
-import type { User, Book, CartItem } from "./types";
+import type { User, Book, CartItem, Order } from "./types";
 import { BookCatalog } from "./components/BookCatalog";
 import { Cart } from "./components/Cart";
 import { AdminBooks } from "./components/AdminBooks";
+import { CheckoutModal } from "./components/CheckoutModal";
+import { CustomerOrders } from "./components/CustomerOrders";
+import { AdminOrders } from "./components/AdminOrders";
 
 type Mode = "login" | "register";
-type Tab = "shop" | "cart" | "admin_books" | "account";
+type Tab = "shop" | "cart" | "orders" | "admin_books" | "admin_orders" | "account";
 type ApiResult = { user?: User; error?: string };
 
 const messages: Record<string, string> = {
@@ -39,6 +42,7 @@ export default function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
   // Shopping cart state stored in localStorage
   const [cart, setCart] = useState<CartItem[]>(() => {
@@ -126,6 +130,13 @@ export default function App() {
   function handleClearCart() {
     setCart([]);
     triggerToast("Đã làm trống giỏ sách.");
+  }
+
+  function handleOrderSuccess(order: Order) {
+    setCart([]);
+    setIsCheckoutOpen(false);
+    setCurrentTab("orders");
+    triggerToast(`Đặt hàng COD thành công! Mã đơn: ${order.id}`);
   }
 
   function switchMode(next: Mode) {
@@ -230,14 +241,32 @@ export default function App() {
             Giỏ sách
             {totalCartCount > 0 && <span className="cart-badge">{totalCartCount}</span>}
           </button>
-          {user?.role === "admin" && (
+          {user && (
             <button
               type="button"
-              className={`nav-tab ${currentTab === "admin_books" ? "active" : ""}`}
-              onClick={() => setCurrentTab("admin_books")}
+              className={`nav-tab ${currentTab === "orders" ? "active" : ""}`}
+              onClick={() => setCurrentTab("orders")}
             >
-              Quản lý sách
+              Đơn hàng
             </button>
+          )}
+          {user?.role === "admin" && (
+            <>
+              <button
+                type="button"
+                className={`nav-tab ${currentTab === "admin_books" ? "active" : ""}`}
+                onClick={() => setCurrentTab("admin_books")}
+              >
+                Quản lý sách
+              </button>
+              <button
+                type="button"
+                className={`nav-tab ${currentTab === "admin_orders" ? "active" : ""}`}
+                onClick={() => setCurrentTab("admin_orders")}
+              >
+                Quản lý đơn
+              </button>
+            </>
           )}
           <button
             type="button"
@@ -264,14 +293,20 @@ export default function App() {
                 triggerToast("Vui lòng đăng nhập để tiến hành đặt hàng COD.");
                 setCurrentTab("account");
               } else {
-                triggerToast("Tính năng đặt hàng COD sẽ được hoàn thiện trong Epic E4!");
+                setIsCheckoutOpen(true);
               }
             }}
             onExplore={() => setCurrentTab("shop")}
           />
         )}
 
+        {currentTab === "orders" && (
+          <CustomerOrders onExplore={() => setCurrentTab("shop")} />
+        )}
+
         {currentTab === "admin_books" && <AdminBooks />}
+
+        {currentTab === "admin_orders" && <AdminOrders />}
 
         {currentTab === "account" && (
           <div className="main-grid">
@@ -445,6 +480,16 @@ export default function App() {
           </div>
         )}
       </main>
+
+      {/* Checkout COD Modal */}
+      {isCheckoutOpen && user && (
+        <CheckoutModal
+          cart={cart}
+          user={user}
+          onClose={() => setIsCheckoutOpen(false)}
+          onOrderSuccess={handleOrderSuccess}
+        />
+      )}
 
       {/* Floating Toast Notification */}
       {toast && (
