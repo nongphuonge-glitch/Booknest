@@ -6,8 +6,11 @@
     {
       "binding": "DB",
       "database_name": "booknest",
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "1e5741d0-eb3f-4b88-a326-a207e99d50f1",
       "migrations_dir": "db/migrations"
     }
-  ]
+  ],
+  "vars": {
+    "ALLOWED_ORIGIN": "https://booknest-ckb.pages.dev"
+  }
 }
