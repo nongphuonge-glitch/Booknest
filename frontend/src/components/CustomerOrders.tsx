@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import type { Order } from "../types";
+import { apiUrl } from "../api";
 
 interface Props {
   onExplore: () => void;
@@ -12,7 +13,7 @@ export function CustomerOrders({ onExplore }: Props) {
 
   function loadMyOrders() {
     setLoading(true);
-    fetch("/api/orders/my", { credentials: "include" })
+    fetch(apiUrl("/api/orders/my"), { credentials: "include" })
       .then((res) => res.json() as Promise<{ orders?: Order[]; error?: string }>)
       .then((data) => {
         if (data.orders) {

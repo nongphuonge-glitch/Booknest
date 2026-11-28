@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from "react";
 import type { User, Book, CartItem, Order } from "./types";
+import { apiUrl } from "./api";
 import { BookCatalog } from "./components/BookCatalog";
 import { Cart } from "./components/Cart";
 import { AdminBooks } from "./components/AdminBooks";
@@ -20,7 +21,7 @@ const messages: Record<string, string> = {
 };
 
 async function api(path: string, method = "GET", body?: object): Promise<{ status: number; data: ApiResult }> {
-  const response = await fetch(path, {
+  const response = await fetch(apiUrl(path), {
     method,
     credentials: "include",
     headers: body ? { "Content-Type": "application/json" } : undefined,

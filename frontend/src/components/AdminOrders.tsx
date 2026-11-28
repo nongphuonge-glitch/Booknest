@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import type { Order, OrderStatus } from "../types";
+import { apiUrl } from "../api";
 
 export function AdminOrders() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -11,7 +12,7 @@ export function AdminOrders() {
 
   function loadOrders() {
     setLoading(true);
-    fetch("/api/admin/orders", { credentials: "include" })
+    fetch(apiUrl("/api/admin/orders"), { credentials: "include" })
       .then((res) => res.json() as Promise<{ orders?: Order[]; error?: string }>)
       .then((data) => {
         if (data.orders) {
@@ -39,7 +40,7 @@ export function AdminOrders() {
     setUpdatingId(orderId);
 
     try {
-      const res = await fetch(`/api/admin/orders/${orderId}/status`, {
+      const res = await fetch(apiUrl(`/api/admin/orders/${orderId}/status`), {
         method: "PATCH",
         credentials: "include",
         headers: { "Content-Type": "application/json" },

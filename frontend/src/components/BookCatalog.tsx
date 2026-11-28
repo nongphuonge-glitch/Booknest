@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import type { Book, Category } from "../types";
 import { BookDetailModal } from "./BookDetailModal";
+import { apiUrl } from "../api";
 
 interface Props {
   isLoggedIn: boolean;
@@ -19,7 +20,7 @@ export function BookCatalog({ isLoggedIn, onAddToCart }: Props) {
 
   // Load categories
   useEffect(() => {
-    fetch("/api/categories")
+    fetch(apiUrl("/api/categories"))
       .then((res) => res.json() as Promise<{ categories?: Category[] }>)
       .then((data) => {
         if (data.categories) setCategories(data.categories);
@@ -35,7 +36,7 @@ export function BookCatalog({ isLoggedIn, onAddToCart }: Props) {
     if (searchQuery.trim()) params.set("q", searchQuery.trim());
     if (sortOption !== "default") params.set("sort", sortOption);
 
-    fetch(`/api/books?${params.toString()}`)
+    fetch(apiUrl(`/api/books?${params.toString()}`))
       .then((res) => res.json() as Promise<{ books?: Book[]; error?: string }>)
       .then((data) => {
         if (data.books) {

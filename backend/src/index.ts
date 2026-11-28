@@ -1,13 +1,13 @@
 import { handleAuth, requireUser } from "./auth";
 import { getCategories, getBooks, getBookDetail, getAdminBooks, createAdminBook, updateAdminBook } from "./books";
 import { createOrder, getCustomerOrders, getAdminOrders, updateOrderStatus } from "./orders";
+import { buildCorsHeaders, withCors } from "./cors";
 import type { Env } from "./auth";
 
-export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const url = new URL(request.url);
-    const authResponse = await handleAuth(request, env, url.pathname);
-    if (authResponse) return authResponse;
+async function handleRequest(request: Request, env: Env): Promise<Response> {
+  const url = new URL(request.url);
+  const authResponse = await handleAuth(request, env, url.pathname);
+  if (authResponse) return authResponse;
 
     if (request.method === "GET" && url.pathname === "/api/categories") {
       return getCategories(env);
@@ -82,5 +82,14 @@ export default {
     }
 
     return Response.json({ error: "Not found" }, { status: 404 });
+}
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    if (request.method === "OPTIONS") {
+      return new Response(null, { status: 204, headers: buildCorsHeaders(request, env) });
+    }
+    const response = await handleRequest(request, env);
+    return withCors(response, request, env);
   },
 } satisfies ExportedHandler<Env>;

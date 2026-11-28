@@ -1,5 +1,6 @@
 import { useState, useEffect, type FormEvent } from "react";
 import type { Book, Category } from "../types";
+import { apiUrl } from "../api";
 
 export function AdminBooks() {
   const [books, setBooks] = useState<Book[]>([]);
@@ -27,8 +28,8 @@ export function AdminBooks() {
   function loadAdminBooks() {
     setLoading(true);
     Promise.all([
-      fetch("/api/admin/books", { credentials: "include" }).then((r) => r.json() as Promise<{ books?: Book[]; error?: string }>),
-      fetch("/api/categories").then((r) => r.json() as Promise<{ categories?: Category[] }>),
+      fetch(apiUrl("/api/admin/books"), { credentials: "include" }).then((r) => r.json() as Promise<{ books?: Book[]; error?: string }>),
+      fetch(apiUrl("/api/categories")).then((r) => r.json() as Promise<{ categories?: Category[] }>),
     ])
       .then(([booksData, catData]) => {
         if (booksData.books) {
@@ -68,7 +69,7 @@ export function AdminBooks() {
     setUpdatingId(book.id);
 
     try {
-      const res = await fetch(`/api/admin/books/${book.id}`, {
+      const res = await fetch(apiUrl(`/api/admin/books/${book.id}`), {
         method: "PATCH",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -99,7 +100,7 @@ export function AdminBooks() {
 
     setUpdatingId(book.id);
     try {
-      const res = await fetch(`/api/admin/books/${book.id}`, {
+      const res = await fetch(apiUrl(`/api/admin/books/${book.id}`), {
         method: "PATCH",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -140,7 +141,7 @@ export function AdminBooks() {
 
     setSubmitting(true);
     try {
-      const res = await fetch("/api/admin/books", {
+      const res = await fetch(apiUrl("/api/admin/books"), {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },

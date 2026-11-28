@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import type { CartItem, User, Order } from "../types";
+import { apiUrl } from "../api";
 
 interface Props {
   cart: CartItem[];
@@ -33,7 +34,7 @@ export function CheckoutModal({ cart, user, onClose, onOrderSuccess }: Props) {
 
     setSubmitting(true);
     try {
-      const res = await fetch("/api/orders", {
+      const res = await fetch(apiUrl("/api/orders"), {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },

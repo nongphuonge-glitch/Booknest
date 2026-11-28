@@ -5,7 +5,7 @@
 * **Nhóm sinh viên thực hiện**:
   1. **Trần Văn Nhu** — Mã SV: DTC235200572 (Nhóm trưởng)
   2. **Nông Minh Phương**
-  3. **Hoàng Duy Hạnh**
+  3. **Hoàng Duy Hanh**
 * **Kho lưu trữ mã nguồn**: [https://github.com/nongphuonge-glitch/Booknest.git](https://github.com/nongphuonge-glitch/Booknest.git)
 
 ---

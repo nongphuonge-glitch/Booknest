@@ -1,5 +1,8 @@
+import { isAllowedOrigin } from "./cors";
+
 export interface Env {
   DB: D1Database;
+  ALLOWED_ORIGIN?: string;
 }
 
 interface Credentials {
@@ -80,13 +83,14 @@ function cookieValue(request: Request): string | null {
 }
 
 function sessionCookie(token: string, request: Request, maxAge: number): string {
-  const secure = new URL(request.url).protocol === "https:" ? "; Secure" : "";
-  return `${SESSION_COOKIE}=${token}; HttpOnly; SameSite=Lax; Path=/; Max-Age=${maxAge}${secure}`;
+  const isHttps = new URL(request.url).protocol === "https:";
+  const crossSiteAttrs = isHttps ? "; SameSite=None; Secure" : "; SameSite=Lax";
+  return `${SESSION_COOKIE}=${token}; HttpOnly${crossSiteAttrs}; Path=/; Max-Age=${maxAge}`;
 }
 
-function sameOrigin(request: Request): boolean {
+function sameOrigin(request: Request, env: Env): boolean {
   const origin = request.headers.get("Origin");
-  return !origin || origin === new URL(request.url).origin;
+  return isAllowedOrigin(origin, request, env);
 }
 
 async function readCredentials(request: Request): Promise<Credentials | null> {
@@ -191,7 +195,7 @@ async function logout(request: Request, env: Env): Promise<Response> {
 
 export async function handleAuth(request: Request, env: Env, path: string): Promise<Response | null> {
   if (request.method === "POST" && ["/api/auth/register", "/api/auth/login", "/api/auth/logout"].includes(path)) {
-    if (!sameOrigin(request)) return Response.json({ error: "Invalid origin" }, { status: 403 });
+    if (!sameOrigin(request, env)) return Response.json({ error: "Invalid origin" }, { status: 403 });
     if (path === "/api/auth/register") return register(request, env);
     if (path === "/api/auth/login") return login(request, env);
     return logout(request, env);
