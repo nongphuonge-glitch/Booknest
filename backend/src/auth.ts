@@ -28,7 +28,8 @@ export interface CurrentUser {
 
 const SESSION_COOKIE = "booknest_session";
 const SESSION_DAYS = 7;
-const PASSWORD_ITERATIONS = 310_000;
+// Cloudflare Workers SubtleCrypto PBKDF2 supports up to 100,000 iterations.
+const PASSWORD_ITERATIONS = 100_000;
 
 function encodeBase64(bytes: Uint8Array): string {
   return btoa(String.fromCharCode(...bytes));

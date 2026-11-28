@@ -89,7 +89,15 @@ export default {
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: buildCorsHeaders(request, env) });
     }
-    const response = await handleRequest(request, env);
-    return withCors(response, request, env);
+    try {
+      const response = await handleRequest(request, env);
+      return withCors(response, request, env);
+    } catch {
+      return withCors(
+        Response.json({ error: "Internal server error" }, { status: 500 }),
+        request,
+        env,
+      );
+    }
   },
 } satisfies ExportedHandler<Env>;
